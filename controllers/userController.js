@@ -58,7 +58,7 @@ export const forgotPassword = async (req, res) => {
         const secret = process.env.JWT_SECRET + oldUser.password;
         const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "10m" });
 
-        const link = `http://localhost:8080/api/reset-password/${oldUser._id}/${token}`;
+        const link = `https://pradipblogs-backend.onrender.com/api/reset-password/${oldUser._id}/${token}`;
 
         // Set up nodemailer transporter
         let transporter = nodemailer.createTransport({
