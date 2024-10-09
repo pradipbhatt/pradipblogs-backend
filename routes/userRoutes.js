@@ -7,8 +7,10 @@ import {
     getAllUsers,
     deleteUser,
     getPaginatedUsers,
-    uploadImage,
-    getImage,
+    uploadImage, 
+    getImage, 
+    updateImage, 
+    deleteImage,
     resetPasswordPage,
 } from '../controllers/userController.js';
 
@@ -25,7 +27,6 @@ router.post('/forgot-password', forgotPassword);
 // Reset Password (POST to update the password)
 router.post('/reset-password/:id/:token', resetPassword);
 
-// Render Forgot Password Page (GET)
 // Render Forgot Password Page (GET)
 router.get('/forgot-password', (req, res) => {
     res.render('forgot-password');
@@ -46,10 +47,16 @@ router.get('/users/paginated', getPaginatedUsers);
 router.delete('/users/delete', deleteUser);
 
 // Upload Image
-router.post('/upload-image', uploadImage);
+router.post('/images', uploadImage);
 
 // Get Images
-router.get('/images', getImage);
+router.get('/images/:id', getImage);
+
+// Update image by ID
+router.put('/images/:id', updateImage); // New route for updating image
+
+// Delete image by ID
+router.delete('/images/:id', deleteImage); // New route for deleting image
 
 
 

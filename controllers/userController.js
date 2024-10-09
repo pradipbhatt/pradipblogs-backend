@@ -84,7 +84,6 @@ export const forgotPassword = async (req, res) => {
     }
 };
 
-// Reset Password
 // Reset Password (POST to update the password)
 export const resetPassword = async (req, res) => {
     const { id, token } = req.params;
@@ -184,6 +183,7 @@ export const getPaginatedUsers = async (req, res) => {
 };
 
 // Upload Image
+// Upload image
 export const uploadImage = async (req, res) => {
     const { base64 } = req.body;
     try {
@@ -195,16 +195,52 @@ export const uploadImage = async (req, res) => {
     }
 };
 
-// Get Image
+// Get Image by ID
 export const getImage = async (req, res) => {
+    const { id } = req.params;
     try {
-        const images = await Images.find({});
-        res.json({ status: "ok", data: images });
+        const image = await Images.findById(id);
+        if (!image) {
+            return res.status(404).json({ status: "error", message: "Image not found" });
+        }
+        res.json({ status: "ok", data: image });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: "error", message: "Server error" });
     }
 };
+
+// Update Image by ID
+export const updateImage = async (req, res) => {
+    const { id } = req.params;
+    const { base64 } = req.body; // Assuming you're sending the updated Base64 image in the body
+    try {
+        const updatedImage = await Images.findByIdAndUpdate(id, { image: base64 }, { new: true });
+        if (!updatedImage) {
+            return res.status(404).json({ status: "error", message: "Image not found" });
+        }
+        res.json({ status: "ok", data: updatedImage });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+};
+
+// Delete Image by ID
+export const deleteImage = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedImage = await Images.findByIdAndDelete(id);
+        if (!deletedImage) {
+            return res.status(404).json({ status: "error", message: "Image not found" });
+        }
+        res.json({ status: "ok", message: "Image deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+};
+
 
 // Render Reset Password Page
 // Render Reset Password Page

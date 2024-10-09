@@ -8,7 +8,7 @@ dotenv.config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const mongoUrl = "mongodb+srv://pradipbhatt:pradip@cluster0.zi62tma.mongodb.net/pradipblogs?retryWrites=true&w=majority&appName=Cluster0";
+const mongoUrl = "mongodb+srv://pradipbhatt:pradip@cluster0.zi62tma.mongodb.net/blogs?retryWrites=true&w=majority&appName=Cluster0";
 
 // Middleware
 app.use(cors());
