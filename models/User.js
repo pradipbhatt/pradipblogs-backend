@@ -15,15 +15,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    registrationNumber: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    userImage: {
-        type: String,
-        default: '',
-    },
     isAdmin: {
         type: Boolean,
         default: false,  // Regular user by default

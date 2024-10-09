@@ -6,9 +6,9 @@ import Images from '../models/imageDetails.js'; // Assuming an Image model exist
 
 // Register User
 export const registerUser = async (req, res) => {
-    const { fullname, email, password, registrationNumber, userImage } = req.body;
+    const { fullname, email, password,  } = req.body;
 
-    if (!password || !registrationNumber || !fullname || !email) {
+    if (!password || !fullname || !email) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -17,7 +17,7 @@ export const registerUser = async (req, res) => {
         if (existingUser) return res.status(400).json({ message: "User already exists" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ fullname, email, password: hashedPassword, registrationNumber, userImage });
+        const newUser = new UserModel({ fullname, email, password: hashedPassword,  });
         await newUser.save();
         return res.status(201).json({ message: "User registered successfully!" });
     } catch (error) {
@@ -37,8 +37,8 @@ export const loginUser = async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(401).json({ message: "Invalid password" });
 
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-        return res.json({ status: "ok", token, user: { fullname: user.fullname, email: user.email, userImage: user.userImage, registrationNumber: user.registrationNumber } });
+        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: "25m" });
+        return res.json({ status: "ok", token }); // Only returning token
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Server error" });
