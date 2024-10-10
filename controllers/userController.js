@@ -37,13 +37,18 @@ export const loginUser = async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(401).json({ message: "Invalid password" });
 
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: "25m" });
-        return res.json({ status: "ok", token }); // Only returning token
+        const token = jwt.sign(
+            { email: user.email, id: user._id, isAdmin: user.isAdmin }, // Include isAdmin in the token payload
+            process.env.JWT_SECRET,
+            { expiresIn: "25m" }
+        );
+        return res.json({ status: "ok", token });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Server error" });
     }
 };
+
 
 // Forgot Password
 export const forgotPassword = async (req, res) => {
