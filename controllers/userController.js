@@ -159,6 +159,43 @@ export const deleteUser = async (req, res) => {
     }
 };
 
+// Update User
+export const updateUser = async (req, res) => {
+    const { id } = req.params; // Get user ID from request parameters
+    const { fullname, email, password, isAdmin } = req.body; // Destructure the request body
+
+    // Validate the required fields
+    if (!fullname || !email) {
+        return res.status(400).json({ message: "Full name and email are required" });
+    }
+
+    try {
+        const updatedUserData = {
+            fullname,
+            email,
+            isAdmin, // Optional field to update admin status
+        };
+
+        // If a password is provided, hash it
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updatedUserData.password = hashedPassword;
+        }
+
+        // Find and update the user
+        const updatedUser = await UserModel.findByIdAndUpdate(id, updatedUserData, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({ status: "ok", message: "User updated successfully", data: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
 // Get Paginated Users
 export const getPaginatedUsers = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default to 1

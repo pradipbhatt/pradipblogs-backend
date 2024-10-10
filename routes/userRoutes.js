@@ -6,6 +6,7 @@ import {
     resetPassword,
     getAllUsers,
     deleteUser,
+    updateUser,
     getPaginatedUsers,
     uploadImage, 
     getImage, 
@@ -45,6 +46,9 @@ router.get('/users/paginated', getPaginatedUsers);
 
 // Delete User
 router.delete('/users/delete', deleteUser);
+
+// Update User
+router.put('/users/update/:id', updateUser); // New route for updating user
 
 // Upload Image
 router.post('/images', uploadImage);
