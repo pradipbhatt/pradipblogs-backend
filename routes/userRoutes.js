@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     registerUser,
+    getSingleUser,
     loginUser,
     forgotPassword,
     resetPassword,
@@ -19,6 +20,8 @@ const router = express.Router();
 
 // User Registration
 router.post('/signup', registerUser); // Changed from /register to /signup
+
+router.get('/user/:id', getSingleUser);
 
 // User Login
 router.post('/login', loginUser);

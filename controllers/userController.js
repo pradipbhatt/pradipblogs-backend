@@ -26,6 +26,23 @@ export const registerUser = async (req, res) => {
     }
 };
 
+// Get Single User by ID
+export const getSingleUser = async (req, res) => {
+    const { id } = req.params; // Get user ID from request parameters
+
+    try {
+        const user = await UserModel.findById(id); // Find user by ID
+        if (!user) {
+            return res.status(404).json({ status: "error", message: "User not found" });
+        }
+        res.json({ status: "ok", data: user }); // Return the user data
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+};
+
+
 // Login User
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
