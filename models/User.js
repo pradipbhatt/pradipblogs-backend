@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-// User schema
+// User schema with email verification
 const userSchema = new mongoose.Schema({
     fullname: {
         type: String,
@@ -18,7 +18,14 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false,  // Regular user by default
-    }
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    verificationToken: {
+        type: String,
+    },
 }, {
     timestamps: true,  // Automatically adds createdAt and updatedAt fields
 });

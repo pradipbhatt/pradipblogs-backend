@@ -14,12 +14,17 @@ import {
     updateImage, 
     deleteImage,
     resetPasswordPage,
+    verifyEmail
 } from '../controllers/userController.js';
 
 const router = express.Router();
 
 // User Registration
-router.post('/signup', registerUser); // Changed from /register to /signup
+// User Registration
+router.post('/register', registerUser); 
+
+// Render OTP input page
+router.get('/verify-email', verifyEmail); 
 
 router.get('/user/:id', getSingleUser);
 
