@@ -40,7 +40,7 @@ export const registerUser = async (req, res) => {
         await tempUser.save();
 
         // Send verification email with OTP and link
-        const verificationLink = `http://localhost:8080/api/verify-email?token=${verificationToken}&otp=${otp}`;
+        const verificationLink = `https://pradipblogs-backend.onrender.com/api/verify-email?token=${verificationToken}&otp=${otp}`;
 
         // Render the HTML email template with EJS
         ejs.renderFile('./views/emailVerificationTemplate.ejs', { fullname, verificationLink, otp }, async (err, html) => {
